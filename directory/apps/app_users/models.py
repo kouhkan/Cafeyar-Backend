@@ -17,14 +17,6 @@ class User(db.Model):
     # One-To-One field for every user has one field on tbl_profiles
     profile = db.relationship('Profile', backref='tbl_users', uselist=False)
 
-    @validates('password')
-    def validate_password(self, key, value):
-        if value is None:
-            raise ValueError("Password can't be empty")
-        if len(value) < 6:
-            raise ValueError("Password can't be less than 6 characters")
-        return generate_password_hash(value)
-
     @validates('username')
     def validate_username(self, key, value):
         if value is None:
